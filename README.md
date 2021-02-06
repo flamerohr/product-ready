@@ -1,5 +1,9 @@
 # Product Ready App
 
+## Not ready for production
+
+This was built without the intention for this to be ready for production.
+
 ## Starting local development
 
 A few things to make sure you have ready before you can begin running this app in your local machine:
@@ -10,15 +14,27 @@ When you're all setup, run:
 ```
 ./vendor/bin/sail up
 ```
-Then browse to http://localhost to view the app.
+You can browse to http://localhost to view the app.
 
 **NOTE**: The first time you run the `Sail up` command, Sail's application containers will be built on your machine. This could take several minutes. **Don't worry, subsequent attempts to start Sail will be much faster.**
 
-## Not ready for production
+### Preparing the database
 
-This was built without the intention for this to be ready for production.
+With things setup and `sail up` running, in a new terminal window run:
+```
+./vendor/bin/sail artisan migrate
+```
+To get the database built properly for use. In some instances you may like to use the `--force` flag, but I advise caution with using it.
 
-## Instructions
+### Seeding the database
+
+Lastly, with the database built, keep `sail up` running, in a new terminal window run:
+```
+./vendor/bin/sail artisan db:seed --class=DatabaseSeeder
+```
+This will fill up the database properly with data from the provided csv
+
+## Instructions overview
 
 Your mission, should you choose to accept it, is to write a Laravel application that helps a user understand how much quantity of a product is available for use.
 
@@ -28,7 +44,7 @@ When the button is clicked, the interface should show either the $ value of the 
 
 Note that product purchased first should be used first, therefore the quantity on hand should be the most recently purchased.
 
-A csv file is attached that you should use as your data source.
+A csv file is attached that you should use as your data source. (located at `database/seeders/sources/Fertiliser inventory movements - Sheet1.csv`)
 
 Here is a small example of inventory movements:  
 a. Purchased 1 unit at $10 per unit  
