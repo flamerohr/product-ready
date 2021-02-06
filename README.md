@@ -1,62 +1,51 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# Product Ready App
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Starting local development
 
-## About Laravel
+A few things to make sure you have ready before you can begin running this app in your local machine:
+- Make sure to have [Docker Desktop](https://www.docker.com/) installed
+- For `Windows`, make sure you have WSL2 installed and enabled, [Microsoft's developer environment documentation](https://docs.microsoft.com/en-us/windows/wsl/install-win10) has more details.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+When you're all setup, run:
+```
+./vendor/bin/sail up
+```
+Then browse to http://localhost to view the app.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+**NOTE**: The first time you run the `Sail up` command, Sail's application containers will be built on your machine. This could take several minutes. **Don't worry, subsequent attempts to start Sail will be much faster.**
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Not ready for production
 
-## Learning Laravel
+This was built without the intention for this to be ready for production.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Instructions
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Your mission, should you choose to accept it, is to write a Laravel application that helps a user understand how much quantity of a product is available for use.
 
-## Laravel Sponsors
+The application should display an interface with a button and a single input that represents the requested quantity of a product.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+When the button is clicked, the interface should show either the $ value of the quantity of that product that will be applied, or an error message if the quantity to be applied exceeds the quantity on hand.
 
-### Premium Partners
+Note that product purchased first should be used first, therefore the quantity on hand should be the most recently purchased.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/)**
-- **[OP.GG](https://op.gg)**
+A csv file is attached that you should use as your data source.
 
-## Contributing
+Here is a small example of inventory movements:  
+a. Purchased 1 unit at $10 per unit  
+b. Purchased 2 units at $20 per unit  
+c. Purchased 2 units at $15 per unit  
+d. Applied 2 units  
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+After the 2 units have been applied, the purchased units in 'a' have been completely used up. Only 1 unit from 'b' has been used, so the remaining inventory looks like this:
 
-## Code of Conduct
+b. 1 unit at $20 per unit c. 2 units at $15 per unit  
+Quantity on hand = 3 Valuation = (1 * 20) + (2 * 15) = $50
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Here's what we'll be looking for in your submission:
+	• Breaking the code down into logical classes and methods that have a single responsibility
+	• Clear comments that explain the code logic
+	• Descriptive method and variable names
+	• Usage of suitable packages (if applicable) to solve a problem rather than writing code from scratch. No need to reinvent the wheel :)
+	• A descriptive README file
+	• Some PHPUnit tests to ensure other developers don't accidentally break 
 
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
