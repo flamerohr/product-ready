@@ -34,6 +34,10 @@ Lastly, with the database built, keep `sail up` running, in a new terminal windo
 ```
 This will fill up the database properly with data from the provided csv
 
+## Practices
+
+I was following the rules [outlined in this document](https://github.com/alexeymezenin/laravel-best-practices) loosely.
+
 ## Instructions overview
 
 Your mission, should you choose to accept it, is to write a Laravel application that helps a user understand how much quantity of a product is available for use.
