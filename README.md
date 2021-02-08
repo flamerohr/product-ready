@@ -18,6 +18,13 @@ After preparing the database and seeding it (instructions below), you can browse
 
 **NOTE**: The first time you run the `Sail up` command, Sail's application containers will be built on your machine. This could take several minutes. **Don't worry, subsequent attempts to start Sail will be much faster.**
 
+### Installing dependencies
+
+You will need to install dependencies for the project run:
+```
+./vendor/bin/sail composer install
+```
+
 ### Preparing the database
 
 With things setup and `sail up` running, in a new terminal window run:
