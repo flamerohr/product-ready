@@ -34,6 +34,23 @@ Lastly, with the database built, keep `sail up` running, in a new terminal windo
 ```
 This will fill up the database properly with data from the provided csv
 
+### Rolling back changes
+
+To rollback all change, I suggest running:
+```
+./vendor/bin/sail artisan migrate:rollback && \
+./vendor/bin/sail artisan migrate && \
+./vendor/bin/sail artisan db:seed --class=DatabaseSeeder
+```
+
+This will recreate all database tables and re-seed the database again
+
+## Outline changes
+
+Most of the app logic is contained in `app/Services/TransactionService.php`, while provided data is found in the folder `database/seeders/sources`.
+
+Two models are defined `Product` and `Transaction` to enable querying and recording data.
+
 ## Practices
 
 I was following the rules [outlined in this document](https://github.com/alexeymezenin/laravel-best-practices) loosely.

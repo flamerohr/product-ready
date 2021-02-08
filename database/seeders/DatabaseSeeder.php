@@ -43,7 +43,6 @@ class DatabaseSeeder extends Seeder
                 return $transactionService->create($data);
             });
 
-        print_r($transactions->all());
-        print_r(Product::all());
+        echo 'Transactions made: '.$transactions->count() ."\n". 'Products available: '.Product::count() ."\n";
     }
 }

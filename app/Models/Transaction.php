@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Product;
 
+/**
+ * A transactional record of what has happened, could be useful for auditing the history of changes made.
+ */
 class Transaction extends Model
 {
     use HasFactory;
