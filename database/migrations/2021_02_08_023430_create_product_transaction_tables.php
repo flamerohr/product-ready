@@ -25,8 +25,14 @@ class CreateProductTransactionTables extends Migration
             $table->id();
             $table->dateTime('date');
             $table->decimal('price');
-            $table->foreignId('created_transaction_id')->references('id')->on('transactions');
-            $table->foreignId('deleted_transaction_id')->references('id')->on('transactions');
+            $table
+                ->foreignId('created_transaction_id')
+                ->nullable()
+                ->constrained('transactions');
+            $table
+                ->foreignId('deleted_transaction_id')
+                ->nullable()
+                ->constrained('transactions');
             $table->timestamps();
             $table->softDeletes();
         });
