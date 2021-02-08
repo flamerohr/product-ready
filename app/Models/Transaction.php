@@ -2,8 +2,14 @@
 
 namespace App\Models;
 
-class Transaction
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use App\Models\Product;
+
+class Transaction extends Model
 {
+    use HasFactory;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -14,6 +20,15 @@ class Transaction
         'type',
         'quantity',
         'unit_price',
+    ];
+
+    /**
+     * The model's default values for attributes.
+     *
+     * @var array
+     */
+    protected $attributes = [
+        'unit_price' => 0,
     ];
 
     /**
