@@ -46,4 +46,12 @@ class Transaction extends Model
     protected $casts = [
         'date' => 'datetime',
     ];
+
+    public function purchased() {
+        return $this->hasMany(Product::class, 'created_transaction_id');
+    }
+
+    public function applied() {
+        return $this->hasMany(Product::class, 'deleted_transaction_id');
+    }
 }
