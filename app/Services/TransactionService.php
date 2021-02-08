@@ -12,14 +12,11 @@ class TransactionService {
      * For processing a current application for a product
      */
     public function apply($quantity) {
-        $transaction = Transaction::create([
+        $transaction = $this->create([
             'date' => Carbon::now(),
             'type' => 'Application',
             'quantity' => $quantity,
         ]);
-
-        // TODO: could shift this call out to a queue in future
-        $this->processApplication($transaction);
 
         return $transaction;
     }
@@ -28,15 +25,12 @@ class TransactionService {
      * For processing a current purchase for a product
      */
     public function purchase($quantity, $price) {
-        $transaction = Transaction::create([
+        $transaction = $this->create([
             'date' => Carbon::now(),
             'type' => 'Purchase',
             'quantity' => $quantity,
             'unit_price' => $price,
         ]);
-
-        // TODO: could shift this call out to a queue in future
-        $this->processPurchase($transaction);
 
         return $transaction;
     }
