@@ -55,4 +55,13 @@ class Product extends Model
             ->limit($quantity)
             ->get();
     }
+
+    public static function getBatchPrice($quantity) {
+        // TODO: I think I could improve this to a query
+        return static::getBatch($quantity)
+            ->map(function ($product) {
+                return $product->price;
+            })
+            ->sum();
+    }
 }

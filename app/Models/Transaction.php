@@ -50,11 +50,31 @@ class Transaction extends Model
         'date' => 'datetime',
     ];
 
+    /**
+     * Products created if this was a purchase transaction
+     */
     public function purchased() {
         return $this->hasMany(Product::class, 'created_transaction_id');
     }
 
+    /**
+     * Products applied for if this was an application transaction
+     */
     public function applied() {
         return $this->hasMany(Product::class, 'deleted_transaction_id');
+    }
+
+    /**
+     * The total price the applied products cost
+     */
+    public function appliedPrice() {
+        // TODO: I think I could improve this to a query
+        return $this->applied()
+            ->withTrashed()
+            ->get()
+            ->map(function ($product) {
+                return $product->price;
+            })
+            ->sum();
     }
 }

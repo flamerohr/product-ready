@@ -16,20 +16,17 @@ use App\Models\Product;
 |
 */
 
+// TODO: move these routes to a Controller
 Route::get('/', function () {
     return view('product-form');
 });
 
-Route::post('/', function (Request $request) {
+Route::post('/', function (TransactionService $transactionService, Request $request) {
     $request->validate([
         'quantity' => 'required|numeric',
     ]);
     $quantity = $request->input('quantity');
-    $amount = Product::getBatch($quantity)
-        ->map(function ($product) {
-            return $product->price;
-        })
-        ->sum();
+    $amount = Product::getBatchPrice($quantity);
 
     return view('product-form', [
         'amount' => $amount,
@@ -45,13 +42,7 @@ Route::post('/apply', function (TransactionService $transactionService, Request 
 
     $transaction = $transactionService->apply($quantity);
 
-    $products = $transaction->applied()->withTrashed()->get();
-
-    $amount = $products
-        ->map(function ($product) {
-            return $product->price;
-        })
-        ->sum();
+    $amount = $transaction->appliedPrice();
 
     return view('product-applied', [
         'amount' => $amount,
