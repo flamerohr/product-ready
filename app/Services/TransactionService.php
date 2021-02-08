@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Transaction;
+use App\Models\Product;
 
 /**
  * The service for handling all the business logic for the transactions
@@ -42,7 +43,7 @@ class TransactionService {
         $transaction = Transaction::create($data);
         $transaction->save();
 
-        // TODO: this part could be in a Model Event listener I think
+        // TODO: this part could be in a Model Event listener and a queue I think
         switch ($transaction->type) {
             case 'Purchase':
                 $this->processPurchase($transaction);
@@ -61,23 +62,30 @@ class TransactionService {
      * Process an application
      */
     public function processApplication($transaction) {
-        $products = Product::orderBy('date', 'desc')->take($transaction->quantity)->get();
+        $products = Product::getBatch(abs($transaction->quantity));
 
-        $count = $products->count();
+        // TODO: could be better to query a count first, and get the list after this check
+        // check that there's enough products available
+        $count = count($products->all());
         if ($count < $transaction->quantity) {
-            // not enough
+            // not enough products to go around
             throw new InsufficientProductsException($count);
         }
 
-        // TODO: potential race condition, investigate a better way to avoid this
-        $transaction->applied()->save($products);
+        // TODO: potential race condition with getBatch above and delete below, investigate a better way to avoid this
+        $transaction->applied()->saveMany($products);
 
         // TODO: potentially move to Model Event listener I think
         $productIds = $products->map(function ($product) {
             return $product->id;
         });
-        Product::where('id', $productIds)->delete();
 
+        // remove products that are no longer available
+        $deleted = Product::whereIn('id', $productIds->all())->delete();
+
+        if ($deleted !== $count) {
+            throw new InvalidProductRemovalException($transaction);
+        }
         return $products;
     }
 
