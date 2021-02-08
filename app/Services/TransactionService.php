@@ -94,13 +94,14 @@ class TransactionService {
         $products = [];
 
         for ($i = 0; $i < $transaction->quantity; $i++) {
+            // create each new product according to the purchase
             $products[] = new Product([
                 'date' => $transaction->date,
                 'price' => $transaction->unit_price,
             ]);
         }
 
-        $transaction->purchased()->save($products);
+        $transaction->purchased()->saveMany($products);
 
         return $transaction;
     }
