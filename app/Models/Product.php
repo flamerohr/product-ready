@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Exceptions\InvalidNumberException;
 
 class Product extends Model
 {
@@ -38,4 +39,17 @@ class Product extends Model
     protected $casts = [
         'date' => 'datetime',
     ];
+
+    /**
+     * Gets the next batch of products available for application
+     */
+    public static function getBatch($quantity) {
+        if ($quantity < 0) {
+            throw new InvalidNumberException();
+        }
+        return static::whereNull('deleted_transaction_id')
+            ->orderBy('date', 'desc')
+            ->limit($quantity)
+            ->get();
+    }
 }
