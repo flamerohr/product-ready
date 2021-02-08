@@ -66,7 +66,7 @@ class TransactionService {
 
         // TODO: could be better to query a count first, and get the list after this check
         // check that there's enough products available
-        $count = count($products->all());
+        $count = $products->count();
         if ($count < $transaction->quantity) {
             // not enough products to go around
             throw new InsufficientProductsException($count);
