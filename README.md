@@ -14,7 +14,7 @@ When you're all setup, run:
 ```
 ./vendor/bin/sail up
 ```
-You can browse to http://localhost to view the app.
+After preparing the database and seeding it (instructions below), you can browse to http://localhost to view the app.
 
 **NOTE**: The first time you run the `Sail up` command, Sail's application containers will be built on your machine. This could take several minutes. **Don't worry, subsequent attempts to start Sail will be much faster.**
 
@@ -44,6 +44,13 @@ To rollback all change, I suggest running:
 ```
 
 This will recreate all database tables and re-seed the database again
+
+### Running tests
+
+To run unit tests:
+```
+./vendor/bin/sail artisan test
+```
 
 ## Outline changes
 

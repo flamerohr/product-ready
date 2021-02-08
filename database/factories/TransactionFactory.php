@@ -47,6 +47,20 @@ class TransactionFactory extends Factory
     }
 
     /**
+     * Indicate that only purchases are made.
+     *
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     */
+    public function applications()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'type' => 'Application',
+            ];
+        });
+    }
+
+    /**
      * Indicate that the quantity should be very high
      *
      * @return \Illuminate\Database\Eloquent\Factories\Factory

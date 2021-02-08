@@ -93,7 +93,7 @@ class TransactionService {
     /**
      * Process a purchase
      */
-    public function processPurchase($transaction) {
+    public function processPurchase(Transaction $transaction) {
         $products = [];
 
         for ($i = 0; $i < $transaction->quantity; $i++) {
@@ -106,6 +106,6 @@ class TransactionService {
 
         $transaction->purchased()->saveMany($products);
 
-        return $transaction;
+        return $products;
     }
 }
