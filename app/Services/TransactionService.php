@@ -69,9 +69,12 @@ class TransactionService {
     public function processApplication($transaction) {
         $products = Product::orderBy('date', 'desc')->take($transaction->quantity)->get();
 
-        if ($products->count() < $transaction->quantity) {
+        $count = $products->count();
+        if ($count < $transaction->quantity) {
             // not enough
+            throw new InsufficientProductsException($count);
         }
+
         // TODO: potential race condition, investigate a better way to avoid this
         $transaction->applied()->save($products);
 
