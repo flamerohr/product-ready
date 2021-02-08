@@ -6,21 +6,24 @@ use Illuminate\Database\Seeder;
 use Spatie\SimpleExcel\SimpleExcelReader;
 use Carbon\Carbon;
 use App\Models\Transaction;
+use App\Models\Product;
 use App\Services\TransactionService;
 
 class DatabaseSeeder extends Seeder
 {
     /**
-     * Seed the application's database.
+     * Populate database with data provided in the csv file.
      *
      * @return void
      */
     public function run(TransactionService $transactionService)
     {
         // TODO: look for a better way to form a relative path name
+        // read the csv file
         $movementPath = dirname(__FILE__) . '/sources/Fertiliser inventory movements - Sheet1.csv';
         $rows = SimpleExcelReader::create($movementPath)->getRows();
 
+        // format the data to be the expected data properties
         $transactions = $rows
             ->map(function (array $props) {
                 // TODO: maybe use Carbon::createFromFormat() in future
@@ -36,13 +39,11 @@ class DatabaseSeeder extends Seeder
                 ];
             })
             // TODO: improve way to process transactions
-            ->map(function ($data) {
-                $transaction = Transaction::create($data);
-                $transaction->save();
+            ->map(function ($data) use ($transactionService) {
+                return $transactionService->create($data);
+            });
 
-                return $transaction;
-            })
-
-            print_r($transactions->all());
+        print_r($transactions->all());
+        print_r(Product::all()->get());
     }
 }
