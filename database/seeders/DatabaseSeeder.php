@@ -44,6 +44,6 @@ class DatabaseSeeder extends Seeder
             });
 
         print_r($transactions->all());
-        print_r(Product::all()->get());
+        print_r(Product::all());
     }
 }
