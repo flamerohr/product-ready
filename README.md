@@ -52,7 +52,7 @@ To run unit tests:
 ./vendor/bin/sail artisan test
 ```
 
-## Outline changes
+## Outline of changes
 
 Most of the app logic is contained in `app/Services/TransactionService.php`, while provided data is found in the folder `database/seeders/sources`.
 
